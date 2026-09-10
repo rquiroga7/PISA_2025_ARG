@@ -1,0 +1,8 @@
+# Archivos PISA bulk: muy grandes para GitHub (>100 MB por archivo).
+# Se regeneran con los links del OECD webfs (ver PISA2025_Codebook.xlsx).
+CY09_MS_STU_PUF.sav
+CY09_MS_STU_PUF.zip
+STU.part*
+STU4.part*
+stu_extract/
+download_log.txt
