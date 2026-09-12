@@ -54,6 +54,7 @@ def load_data() -> dict:
             None if pd.isna(r.sd_math) else round(float(r.sd_math), 1),
             None if pd.isna(r.sd_read) else round(float(r.sd_read), 1),
             None if pd.isna(r.sd_scie) else round(float(r.sd_scie), 1),
+            None if pd.isna(r.w_sum) else round(float(r.w_sum), 1),
         ])
 
     tr = {"ARG": {}, "OCDE": {}}
@@ -71,6 +72,28 @@ def load_data() -> dict:
             national.setdefault(str(int(r.year)), {})[r.subject] = {
                 "mean": round(float(r.mean), 2), "sd": round(float(r.sd), 2), "n": int(r.n)}
 
+    est = {}
+    ep = os.path.join(DATA, "pisa_arg_estimates.csv")
+    if os.path.exists(ep):
+        for r in pd.read_csv(ep).itertuples(index=False):
+            est.setdefault(str(int(r.year)), {}).setdefault(r.region, {}).setdefault(r.sector, {})[r.subject] = {
+                "mean": round(float(r.mean), 2), "se": round(float(r.se), 3)}
+
+    links = []
+    lp = os.path.join(DATA, "linking_errors.csv")
+    if os.path.exists(lp):
+        links = pd.read_csv(lp).to_dict(orient="records")
+
+    ws = [r[14] for r in rows if r[14] is not None]
+    wmed = float(pd.Series(ws).median()) if ws else 1.0
+    rng = []
+    for regs in est.values():
+        for d2 in regs.values():
+            for d3 in d2.values():
+                for cell in d3.values():
+                    rng += [cell['mean'] - 1.96 * cell['se'], cell['mean'] + 1.96 * cell['se']]
+    evo_range = [round(min(rng) - 5), round(max(rng) + 5)] if rng else [320, 460]
+
     return {
         "years": sorted(int(y) for y in schools["year"].unique()),
         "regions": REGION_ORDER,
@@ -78,6 +101,10 @@ def load_data() -> dict:
         "schools": rows,
         "trends": tr,
         "national": national,
+        "est": est,
+        "links": links,
+        "wmed": wmed,
+        "evoRange": evo_range,
         "meta": meta,
         "built": meta.get("built", ""),
     }
@@ -142,7 +169,6 @@ _TEMPLATE = r"""<!doctype html>
         .pisa-sym {font-size: 12px; width: 14px; text-align: center; display: inline-block;}
         .pisa-dash {display: inline-block; width: 20px; border-top: 3px dashed #111;}
         .pisa-dotline {display: inline-block; width: 20px; border-top: 3px dotted #000;}
-        .pisa-errbar {display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: rgba(17,17,17,0.45); border: 1px solid rgba(17,17,17,0.6);}
         .pisa-reset {cursor: pointer; border: 1px solid #9a9a9a; background: #fff; border-radius: 6px; padding: 4px 12px; font-size: 13px; color: #111;}
         .pisa-reset:hover {background: #f0f0f0;}
         #pisa-caption {max-width: 1110px; margin: 10px 20px 28px 70px; font-size: 13px; line-height: 1.5; color: #555; white-space: normal; overflow-wrap: break-word;}
@@ -168,7 +194,6 @@ __REGION_BUTTONS__
             <button type="button" class="pisa-chip" data-trend="arg" aria-pressed="true" title="Tendencia MCO ponderada por estudiantes sobre las escuelas argentinas del año seleccionado."><span class="pisa-dash"></span>Tendencia (ARG)</button>
             <button type="button" class="pisa-chip" data-trend="oecd" aria-pressed="false" title="Tendencia MCO ponderada sobre escuelas de países OCDE del año seleccionado."><span class="pisa-dash" style="border-top-color:#808080"></span>Tendencia (OCDE)</button>
             <button type="button" class="pisa-chip" data-trend="sel" aria-pressed="false" title="Tendencia MCO ponderada sobre las escuelas visibles según los filtros."><span class="pisa-dotline" style="border-top-color:#FF0000"></span>Tendencia (seleccionados)</button>
-            <button type="button" class="pisa-chip" data-disp="1" aria-pressed="false" title="Mostrar/ocultar un círculo (α≈0,25) por escuela cuyo diámetro representa 1 DE de los puntajes de sus estudiantes."><span class="pisa-errbar"></span>Dispersión intraescuela (1 DE)</button>
         </span>
         <button type="button" id="pisa-reset" class="pisa-reset" title="Mostrar todo">Restablecer</button>
     </div>
@@ -177,12 +202,11 @@ __REGION_BUTTONS__
     <div id="__DIV_ID__" class="pisa-graph"></div>
 
     <div class="pisa-subtitle">Evolución por año, por región y materia</div>
-    <div class="pisa-note">Una línea por región seleccionada y por materia (mismos colores que el gráfico de arriba), con el promedio ponderado por cantidad de estudiantes de sus escuelas en cada año. Los tramos que cruzan años sin datos se dibujan con línea punteada. La línea gris con banda es el <b>promedio general de Argentina ± 1 desvío estándar</b> (nivel estudiante, valores oficiales OCDE).</div>
+    <div class="pisa-note">Una línea por región seleccionada y por materia (mismos colores que el gráfico de arriba), con el promedio ponderado por cantidad de estudiantes de sus escuelas en cada año. Los tramos que cruzan años sin datos se dibujan con línea punteada. La línea gris es el promedio general de Argentina —total, pública o privada según la gestión seleccionada— con su <b>IC 95 %</b> (error de replicación BRR/Fay + reglas de Rubin), igual que las líneas por región. Para comparar dos años hay que sumar el <b>linking error</b> de PISA (2018↔2022: mat 2,24 · lec 1,47 · cie 1,61); sin él, el error de la diferencia queda subestimado.</div>
     <div id="__EVO_ID__" class="pisa-graph-evo"></div>
 
     <div id="pisa-caption">
-        Cada punto = una escuela (tamaño = cantidad de estudiantes evaluados). X = ESCS promedio (W_FSTUWT); Y = puntaje promedio (media de los 10 valores plausibles). Color = región; símbolo = gestión pública (●) / privada (▲). Fuente: microdatos PISA OCDE. Las regiones se reconstruyen del estrato muestral (mejor esfuerzo). En 2015 el estrato «Centro» agrupa a Buenos Aires, Córdoba y Santa Fe: se asigna a las tres regiones a la vez para permitir la comparación con otros años. El botón «Dispersión intraescuela (1 DE)» dibuja, detrás de cada escuela, un círculo del mismo color con transparencia (α≈0,25) cuyo diámetro representa 1 desvío estándar de los estudiantes de esa escuela (heterogeneidad interna; no es el error estándar del promedio).
-    </div>
+        Cada punto = una escuela (tamaño = cantidad de estudiantes evaluados). X = ESCS promedio (W_FSTUWT); Y = puntaje promedio (media de los 10 valores plausibles). Color = región; símbolo = gestión pública (●) / privada (▲). Fuente: microdatos PISA OCDE. Las regiones se reconstruyen del estrato muestral (mejor esfuerzo). En 2015 el estrato «Centro» agrupa a Buenos Aires, Córdoba y Santa Fe: se asigna a las tres regiones a la vez para permitir la comparación con otros años. El tamaño de cada burbuja es proporcional a la población de estudiantes de 15 años que representa cada escuela (metodología de la Figura 5 de la OCDE). <b>Advertencia metodológica:</b> las estimaciones usan pesos de expansión estudiantiles (W_FSTUWT); los errores estándar se calculan con replicación BRR/Fay (80 réplicas, factor de Fay 0.5) y las reglas de Rubin sobre los 10 valores plausibles, y se muestran como IC 95 %. Para diferencias entre años debe sumarse el <i>linking error</i> de PISA (disponible por ahora solo para 2018↔2022). El gráfico no debe usarse para ordenar escuelas.</div>
 
     <script charset="utf-8" src="https://cdn.plot.ly/plotly-4.0.0.min.js" integrity="sha256-FEYfO0yRyLtZCpnW0Dw/0DHKQO7Afrq3ml4+rBB818o=" crossorigin="anonymous"></script>
     <script>
@@ -199,19 +223,16 @@ __REGION_BUTTONS__
             year: DEFAULT_YEAR,
             regions: Object.fromEntries(REGIONS.map(r => [r.key, true])),
             sectors: { "Pública": true, "Privada": true },
-            trends: { arg: true, oecd: false, sel: false },
-            disp: false
+            trends: { arg: true, oecd: false, sel: false }
         };
 
         const REGION_COLOR = Object.fromEntries(REGIONS.map(r => [r.key, r.color]));
 
-        // Escala vertical aproximada (alto del area de trazado / rango del eje Y),
-        // para que el circulo de dispersion represente 1 DE real en puntos PISA.
-        const Y_SPAN = 615 - 250;
-        const PX_PER_POINT = 400 / Y_SPAN;
-        function haloSize(sd) {
-            if (sd == null) return 0;
-            return Math.min(300, sd * PX_PER_POINT);
+        // Tamano de burbuja segun la Figura 5 de OCDE: el area es proporcional a la
+        // poblacion de estudiantes de 15 anios que representa cada escuela (w_sum).
+        function bubbleSize(w) {
+            if (w == null || w <= 0) return 3;
+            return Math.max(3, Math.min(34, 9 * Math.sqrt(w / (DB.wmed || 1))));
         }
 
         function schoolsForYear(year) {
@@ -225,9 +246,6 @@ __REGION_BUTTONS__
             const regionOk = regs.length === 0 ? true : regs.some(k => state.regions[k]);
             const sectorOk = !s[3] || state.sectors[s[3]];
             return regionOk && sectorOk;
-        }
-        function sizeOf(n) {
-            return Math.max(3, 9 * Math.sqrt(n / 29));
         }
         function fmt(v, d) { return (v === null || v === undefined || isNaN(v)) ? "s/d" : v.toFixed(d); }
 
@@ -247,49 +265,42 @@ __REGION_BUTTONS__
             return { a, b, r, xmin: Math.min(...pts.map(p => p.x)), xmax: Math.max(...pts.map(p => p.x)) };
         }
 
-        // ---- Scatter ----
+        // ---- Scatter (burbujas: area proporcional a la poblacion representada, Fig. 5 OCDE) ----
+        // Una traza por materia, con los puntos ordenados por tamano DESCENDENTE para que
+        // las burbujas mas chicas se dibujen por encima de las mas grandes cuando se solapan.
         function buildScatterTraces() {
             const data = schoolsForYear(state.year);
-            const halos = [], points = [];
-            for (const reg of REGIONS) {
-                for (const sec of ["Pública", "Privada"]) {
-                    const sym = sec === "Pública" ? "circle" : "triangle-up";
-                    for (let si = 0; si < SUBJECTS.length; si++) {
-                        const { key, label } = SUBJECTS[si];
-                        const pts = data.filter(s => schoolRegions(s).includes(reg.key) && s[3] === sec && s[6] !== null && s[7 + si] !== null);
-                        if (!pts.length) continue;
-                        const sdcol = 11 + si;
-                        const vis = state.regions[reg.key] && state.sectors[sec];
-                        if (state.disp) {
-                            halos.push({
-                                type: "scatter", mode: "markers", name: reg.key + ", " + sec,
-                                legendgroup: reg.key + ", " + sec, showlegend: false, visible: vis,
-                                hoverinfo: "skip",
-                                x: pts.map(s => s[6]), y: pts.map(s => s[7 + si]),
-                                marker: { color: REGION_COLOR[reg.key], opacity: 0.25, symbol: "circle",
-                                          size: pts.map(s => haloSize(s[sdcol])), line: { width: 0 } },
-                                xaxis: AXES[si], yaxis: "y" + (si ? si + 1 : "")
-                            });
-                        }
-                        points.push({
-                            type: "scatter", mode: "markers",
-                            name: reg.key + ", " + sec,
-                            legendgroup: reg.key + ", " + sec,
-                            showlegend: false, visible: vis,
-                            x: pts.map(s => s[6]), y: pts.map(s => s[7 + si]),
-                            customdata: pts.map(s => [s[1], reg.key, sec, label, fmt(s[6], 2), fmt(s[7 + si], 1),
-                                                      s[4], fmt(s[sdcol], 1)]),
-                            marker: { color: REGION_COLOR[reg.key], symbol: sym, size: pts.map(s => sizeOf(s[4])),
-                                      line: { color: "white", width: 0.5 }, opacity: 0.85 },
-                            xaxis: AXES[si], yaxis: "y" + (si ? si + 1 : ""),
-                            hovertemplate: "<b>%{customdata[0]}</b><br>%{customdata[1]} · %{customdata[2]}<br>" +
-                                "%{customdata[3]}<br>ESCS: %{customdata[4]} (DE intra: %{customdata[7]})<br>" +
-                                "Puntaje: %{customdata[5]}<br>N estudiantes: %{customdata[6]}<extra></extra>"
-                        });
-                    }
-                }
+            const traces = [];
+            for (let si = 0; si < SUBJECTS.length; si++) {
+                const { key, label } = SUBJECTS[si];
+                const pts = data.filter(s => {
+                    const regs = schoolRegions(s);
+                    const regionOk = regs.some(k => state.regions[k]);
+                    const sectorOk = !s[3] || state.sectors[s[3]];
+                    return regionOk && sectorOk && s[6] !== null && s[7 + si] !== null;
+                });
+                if (!pts.length) continue;
+                pts.sort((a, b) => (b[14] || 0) - (a[14] || 0)); // grandes primero, chicos ultimos (encima)
+                traces.push({
+                    type: "scatter", mode: "markers", name: label, showlegend: false,
+                    x: pts.map(s => s[6]), y: pts.map(s => s[7 + si]),
+                    customdata: pts.map(s => [s[1], (schoolRegions(s)[0] || "s/región"), (s[3] || "s/d"), label,
+                                              fmt(s[6], 2), fmt(s[7 + si], 1), s[4],
+                                              (s[14] == null ? "s/d" : Math.round(s[14]).toLocaleString("es-AR"))]),
+                    marker: {
+                        color: pts.map(s => REGION_COLOR[schoolRegions(s)[0]] || "#888888"),
+                        symbol: pts.map(s => s[3] === "Privada" ? "triangle-up" : "circle"),
+                        size: pts.map(s => bubbleSize(s[14])),
+                        line: { color: "white", width: 0.5 }, opacity: 0.6
+                    },
+                    xaxis: AXES[si], yaxis: "y" + (si ? si + 1 : ""),
+                    hovertemplate: "<b>%{customdata[0]}</b><br>%{customdata[1]} · %{customdata[2]}<br>" +
+                        "%{customdata[3]}<br>ESCS: %{customdata[4]}<br>" +
+                        "Puntaje: %{customdata[5]}<br>N estudiantes: %{customdata[6]}<br>" +
+                        "Población 15 años representada: %{customdata[7]}<extra></extra>"
+                });
             }
-            return halos.concat(points);
+            return traces;
         }
 
         function trendTraces() {
@@ -305,7 +316,7 @@ __REGION_BUTTONS__
                     if (sp.key === "sel") {
                         const pts = schoolsForYear(state.year).filter(visible)
                             .filter(s => s[6] !== null && s[7 + si] !== null)
-                            .map(s => ({ x: s[6], y: s[7 + si], w: s[4] }));
+                            .map(s => ({ x: s[6], y: s[7 + si], w: (s[14] !== null && s[14] > 0) ? s[14] : s[4] }));
                         fit = wols(pts);
                     } else {
                         const scope = sp.key === "arg" ? "ARG" : "OCDE";
@@ -349,6 +360,25 @@ __REGION_BUTTONS__
         }
 
         // ---- Evolución ----
+        function hexToRgba(hex, a) {
+            const n = parseInt(hex.slice(1), 16);
+            return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")";
+        }
+        function sectorKey() {
+            return (state.sectors["Pública"] && state.sectors["Privada"]) ? "all"
+                 : (state.sectors["Pública"] ? "Pública" : "Privada");
+        }
+        function estCell(year, region, subject) {
+            const EST = DB.est || {};
+            const sk = sectorKey();
+            const y = EST[String(year)];
+            const cell = y && y[region] && y[region][sk] && y[region][sk][subject];
+            return cell || null;
+        }
+        function seFor(year, region, subject) {
+            const c = estCell(year, region, subject);
+            return c ? c.se : null;
+        }
         // ---- Evolución: una línea por región seleccionada y por materia ----
         function buildEvoTraces() {
             const agg = {};
@@ -362,65 +392,88 @@ __REGION_BUTTONS__
                     for (let si = 0; si < SUBJECTS.length; si++) {
                         const v = s[7 + si];
                         if (v === null) continue;
-                        agg[y][k][si].sum += v * s[4];
-                        agg[y][k][si].w += s[4];
+                        const w = (s[14] !== null && s[14] > 0) ? s[14] : s[4];
+                        agg[y][k][si].sum += v * w;
+                        agg[y][k][si].w += w;
                     }
                 }
             }
-            // Referencia nacional OFICIAL: promedio general de Argentina ± 1 DE
-            // (nivel estudiante, ponderado por W_FSTUWT), en gris difuso.
-            const NAT = DB.national || {};
-            const ref = [];
+            // Referencia nacional: promedio general de Argentina con IC 95 %
+            // (misma metodologia BRR/Fay + Rubin que las regiones). Gris.
+            // Segun la gestion seleccionada: total, publica o privada.
+            const refback = [];
+            const refTop = [];
             for (let si = 0; si < SUBJECTS.length; si++) {
                 const key = SUBJECTS[si].key;
                 const xs = [], up = [], lo = [], mid = [];
                 for (const y of DB.years) {
-                    const cell = NAT[String(y)] && NAT[String(y)][key];
+                    const cell = estCell(y, "Argentina", key);
                     if (cell) {
                         xs.push(y); mid.push(cell.mean);
-                        up.push(cell.mean + cell.sd); lo.push(cell.mean - cell.sd);
+                        up.push(cell.mean + 1.96 * cell.se);
+                        lo.push(cell.mean - 1.96 * cell.se);
                     } else { xs.push(y); mid.push(null); up.push(null); lo.push(null); }
                 }
                 if (mid.every(v => v === null)) continue;
-                ref.push({
-                    type: "scatter", mode: "lines", name: "Argentina +1 DE", showlegend: false,
-                    hoverinfo: "skip", x: xs, y: up, xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
-                    line: { width: 0 }
+                if (up.some(v => v !== null)) {
+                    refback.push({
+                        type: "scatter", mode: "lines", name: "Argentina IC+", showlegend: false,
+                        hoverinfo: "skip", x: xs, y: up, connectgaps: false,
+                        xaxis: EVO_AXES[si], yaxis: EVO_Y[si], line: { width: 0 }
+                    });
+                    refback.push({
+                        type: "scatter", mode: "lines", name: "Argentina IC-", showlegend: false,
+                        hoverinfo: "skip", x: xs, y: lo, connectgaps: false,
+                        xaxis: EVO_AXES[si], yaxis: EVO_Y[si], line: { width: 0 },
+                        fill: "tonexty", fillcolor: "rgba(128,128,128,0.2)"
+                    });
+                }
+                refTop.push({
+                    type: "scatter", mode: "lines", name: "Argentina out", showlegend: false, hoverinfo: "skip",
+                    x: xs, y: mid, connectgaps: false, xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
+                            line: { color: "white", width: 4.15 }
                 });
-                ref.push({
-                    type: "scatter", mode: "lines", name: "Argentina -1 DE", showlegend: false,
-                    hoverinfo: "skip", x: xs, y: lo, xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
-                    line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(128,128,128,0.25)"
-                });
-                ref.push({
-                    type: "scatter", mode: "lines", name: "Promedio Argentina", showlegend: false,
+                refTop.push({
+                    type: "scatter", mode: "lines+markers", name: "Promedio Argentina", showlegend: false,
                     x: xs, y: mid, xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
-                    line: { color: "rgba(128,128,128,0.9)", width: 1.6 },
+                    line: { color: "rgba(70,70,70,0.95)", width: 2.2 },
+                    marker: { color: "rgba(70,70,70,0.95)", size: 6, line: { color: "white", width: 1.1 } },
                     hovertemplate: "Argentina · " + SUBJECTS[si].label + " %{x}: %{y:.1f}<extra></extra>"
                 });
             }
+            const cibands = [];
             const traces = [];
             for (let si = 0; si < SUBJECTS.length; si++) {
                 for (const reg of REGIONS) {
                     if (!state.regions[reg.key]) continue;
-                    const xs = [], ys = [];
+                    const xs = [], ys = [], up = [], lo = [];
                     for (const y of DB.years) {
                         const cell = agg[y][reg.key] && agg[y][reg.key][si];
-                        xs.push(y);
-                        ys.push(cell && cell.w > 0 ? cell.sum / cell.w : null);
+                        const v = cell && cell.w > 0 ? cell.sum / cell.w : null;
+                        xs.push(y); ys.push(v);
+                        const se = v === null ? null : seFor(y, reg.key, SUBJECTS[si].key);
+                        up.push(se === null ? null : v + 1.96 * se);
+                        lo.push(se === null ? null : v - 1.96 * se);
                     }
                     const idxs = [];
                     for (let i = 0; i < ys.length; i++) if (ys[i] !== null) idxs.push(i);
                     if (!idxs.length) continue;
                     const color = REGION_COLOR[reg.key];
+                    // banda de IC 95% (error de replicacion BRR/Fay + Rubin)
+                    if (up.some(v => v !== null)) {
+                        cibands.push({
+                            type: "scatter", mode: "lines", name: reg.key, showlegend: false, hoverinfo: "skip",
+                            x: xs, y: up, connectgaps: false, line: { width: 0 },
+                            xaxis: EVO_AXES[si], yaxis: EVO_Y[si]
+                        });
+                        cibands.push({
+                            type: "scatter", mode: "lines", name: reg.key, showlegend: false, hoverinfo: "skip",
+                            x: xs, y: lo, connectgaps: false, line: { width: 0 },
+                            fill: "tonexty", fillcolor: hexToRgba(color, 0.15),
+                            xaxis: EVO_AXES[si], yaxis: EVO_Y[si]
+                        });
+                    }
                     const hover = reg.key + " · " + SUBJECTS[si].label + " %{x}: %{y:.1f}<extra></extra>";
-                    // puntos
-                    traces.push({
-                        type: "scatter", mode: "markers", name: reg.key,
-                        showlegend: false, x: xs, y: ys,
-                        xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
-                        marker: { size: 6, color: color }, hovertemplate: hover
-                    });
                     // tramos continuos (sólidos) y tramos que cruzan años faltantes (punteados)
                     const solidX = [], solidY = [], dashX = [], dashY = [];
                     for (let k = 0; k < idxs.length - 1; k++) {
@@ -435,6 +488,12 @@ __REGION_BUTTONS__
                             type: "scatter", mode: "lines", name: reg.key, showlegend: false,
                             hoverinfo: "skip", x: solidX, y: solidY, connectgaps: false,
                             xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
+                            line: { color: "white", width: 3.85 }
+                        });
+                        traces.push({
+                            type: "scatter", mode: "lines", name: reg.key, showlegend: false,
+                            hoverinfo: "skip", x: solidX, y: solidY, connectgaps: false,
+                            xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
                             line: { color: color, width: 2.2 }
                         });
                     }
@@ -443,12 +502,25 @@ __REGION_BUTTONS__
                             type: "scatter", mode: "lines", name: reg.key, showlegend: false,
                             hoverinfo: "skip", x: dashX, y: dashY, connectgaps: false,
                             xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
+                            line: { color: "white", width: 3.65, dash: "dash" }
+                        });
+                        traces.push({
+                            type: "scatter", mode: "lines", name: reg.key, showlegend: false,
+                            hoverinfo: "skip", x: dashX, y: dashY, connectgaps: false,
+                            xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
                             line: { color: color, width: 2, dash: "dash" }
                         });
                     }
+                    // puntos
+                    traces.push({
+                        type: "scatter", mode: "markers", name: reg.key,
+                        showlegend: false, x: xs, y: ys,
+                        xaxis: EVO_AXES[si], yaxis: EVO_Y[si],
+                        marker: { size: 6, color: color, line: { color: "white", width: 1.1 } }, hovertemplate: hover
+                    });
                 }
             }
-            return ref.concat(traces);
+            return refback.concat(cibands, traces, refTop);
         }
 
         function evoLayout(yRange) {
@@ -481,10 +553,7 @@ __REGION_BUTTONS__
         }
         function redrawEvo() {
             const traces = buildEvoTraces();
-            const vals = [];
-            for (const t of traces) for (const v of t.y) if (v !== null && isFinite(v)) vals.push(v);
-            const yRange = vals.length ? [Math.min(...vals) - 12, Math.max(...vals) + 12] : [320, 460];
-            Plotly.react(evoDiv, traces, evoLayout(yRange), PLOTLY_CONFIG);
+            Plotly.react(evoDiv, traces, evoLayout(DB.evoRange || [320, 460]), PLOTLY_CONFIG);
             document.getElementById("pisa-year-label").textContent = state.year;
         }
 
@@ -513,19 +582,12 @@ __REGION_BUTTONS__
                 this.setAttribute("aria-pressed", state.trends[k] ? "true" : "false");
                 redrawScatter();
             }));
-            const dispBtn = document.querySelector("[data-disp]");
-            if (dispBtn) dispBtn.addEventListener("click", function () {
-                state.disp = !state.disp;
-                this.setAttribute("aria-pressed", state.disp ? "true" : "false");
-                redrawScatter();
-            });
             document.getElementById("pisa-reset").addEventListener("click", function () {
                 state.regions = Object.fromEntries(REGIONS.map(r => [r.key, true]));
                 state.sectors = { "Pública": true, "Privada": true };
                 state.trends = { arg: true, oecd: false, sel: false };
-                state.disp = false;
                 document.querySelectorAll("#pisa-controls [data-region],#pisa-controls [data-sector]").forEach(b => b.setAttribute("aria-pressed", "true"));
-                document.querySelectorAll("#pisa-controls [data-trend],#pisa-controls [data-disp]").forEach(b => b.setAttribute("aria-pressed", b.getAttribute("data-trend") === "arg" ? "true" : "false"));
+                document.querySelectorAll("#pisa-controls [data-trend]").forEach(b => b.setAttribute("aria-pressed", b.getAttribute("data-trend") === "arg" ? "true" : "false"));
                 redrawScatter(); redrawEvo();
             });
         }

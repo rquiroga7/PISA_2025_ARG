@@ -144,7 +144,7 @@ def load_arg_students(year: int) -> pd.DataFrame | None:
     if not stu_path:
         return None
     cols = io.sav_columns(stu_path)
-    keep = [c for c in (["CNT", "CNTSCHID", "W_FSTUWT", "ESCS"]
+    keep = [c for c in (["CNT", "CNTSCHID", "W_FSTUWT", "ESCS", "GRADE"]
                         + io.pv_names(year, "MATH") + io.pv_names(year, "READ") + io.pv_names(year, "SCIE"))
             if c in cols]
     df = io.read_sav(stu_path, usecols=keep)
@@ -158,6 +158,22 @@ def norm_id(series: pd.Series) -> pd.Series:
     num = pd.to_numeric(series, errors="coerce")
     out = num.astype("Int64").astype(str)
     return out.where(num.notna(), series.astype(str).str.strip())
+
+
+def modal_school_ids(df: pd.DataFrame):
+    """IDs de escuelas con estudiantes en el grado modal (Fig. 5 OCDE).
+    Usa GRADE (0 = modal) o, si no existe, el grado modal de ST01Q01."""
+    if "GRADE" in df.columns:
+        col, val = "GRADE", 0
+    elif "ST01Q01" in df.columns:
+        col = "ST01Q01"
+        m = df[col].mode()
+        if not len(m):
+            return None
+        val = m.iloc[0]
+    else:
+        return None
+    return set(norm_id(df.loc[df[col] == val, "CNTSCHID"]))
 
 
 def assign_region_sector(frame: pd.DataFrame, year: int, mapping: dict) -> pd.DataFrame:
@@ -207,10 +223,15 @@ def trend_from_schools(df: pd.DataFrame) -> list[dict]:
     d = df.dropna(subset=["escs"]).copy()
     if len(d) < 2:
         return []
+    wcol = "w_sum" if "w_sum" in d.columns else "n_stu"
     out = []
     for subj in ["math", "read", "scie"]:
         dd = d.dropna(subset=[subj])
-        fit = wols(dd["escs"].to_numpy(float), dd[subj].to_numpy(float), dd["n_stu"].to_numpy(float))
+        # Peso de expansion: suma de pesos estudiantiles de la escuela (W_FSTUWT).
+        w = pd.to_numeric(dd[wcol], errors="coerce").fillna(0).to_numpy(float)
+        if not (w > 0).any():
+            w = dd["n_stu"].to_numpy(float)
+        fit = wols(dd["escs"].to_numpy(float), dd[subj].to_numpy(float), w)
         if fit:
             fit.update(subject=subj, n_schools=int(len(dd)),
                        x_min=float(dd["escs"].min()), x_max=float(dd["escs"].max()))
@@ -231,7 +252,7 @@ def load_oecd_students(year: int) -> pd.DataFrame | None:
     pvs = io.pv_names(year, "MATH") + io.pv_names(year, "READ") + io.pv_names(year, "SCIE")
     if year in OLD_CYCLES:
         cfg = OLD_CYCLES[year]
-        cols = ["CNT", "SCHOOLID", "ESCS", "W_FSTUWT"] + pvs
+        cols = ["CNT", "SCHOOLID", "ESCS", "W_FSTUWT", "GRADE", "ST01Q01"] + pvs
         txt, sps = _abs(cfg["stu"][0]), _abs(cfg["stu"][1])
         if not (os.path.exists(txt) and os.path.exists(sps)):
             return None
@@ -242,7 +263,7 @@ def load_oecd_students(year: int) -> pd.DataFrame | None:
         if not path:
             return None
         cols = io.sav_columns(path)
-        keep = [c for c in (["CNT", "CNTSCHID", "W_FSTUWT", "ESCS"] + pvs) if c in cols]
+        keep = [c for c in (["CNT", "CNTSCHID", "W_FSTUWT", "ESCS", "GRADE"] + pvs) if c in cols]
         df = io.read_sav(path, usecols=keep)
     df = io.clean_missing(df, ["ESCS"], threshold=10.0)
     df = io.clean_missing(df, pvs, threshold=9990.0)
@@ -259,7 +280,12 @@ def build_oecd_trends(year: int) -> list[dict]:
         return []
     io.add_subject_means(df, year)
     schools = io.aggregate_schools(df, year)
-    log(f"  OCDE {year}: {len(schools)} escuelas")
+    # Fig. 5 OCDE: solo escuelas con estudiantes en el grado modal.
+    ids = modal_school_ids(df)
+    if ids is not None:
+        schools["school_id"] = norm_id(schools["school_id"])
+        schools = schools[schools["school_id"].isin(ids)].copy()
+    log(f"  OCDE {year}: {len(schools)} escuelas (con grado modal)")
     return trend_from_schools(schools)
 
 
@@ -285,7 +311,7 @@ def _abs(p: str) -> str:
 def load_old_students(year: int) -> pd.DataFrame | None:
     cfg = OLD_CYCLES[year]
     pvs = io.pv_names(year, "MATH") + io.pv_names(year, "READ") + io.pv_names(year, "SCIE")
-    cols = ["CNT", "STRATUM", "SCHOOLID", "ESCS", "W_FSTUWT"] + pvs
+    cols = ["CNT", "STRATUM", "SCHOOLID", "ESCS", "W_FSTUWT", "GRADE", "ST01Q01"] + pvs
     txt, sps = _abs(cfg["stu"][0]), _abs(cfg["stu"][1])
     if not (os.path.exists(txt) and os.path.exists(sps)):
         return None
@@ -380,6 +406,13 @@ def main() -> int:
         else:
             schools["region"] = None
             schools["sector"] = "NR"
+
+        # Fig. 5 OCDE: solo escuelas con estudiantes en el grado modal.
+        ids = modal_school_ids(stu)
+        if ids is not None:
+            before = len(schools)
+            schools = schools[schools["school_id"].isin(ids)].copy()
+            log(f"  grado modal: {before} -> {len(schools)} escuelas con estudiantes en grado modal")
 
         schools["year"] = year
         schools = schools[["year", "school_id", "region", "sector", "n_stu", "n_escs",

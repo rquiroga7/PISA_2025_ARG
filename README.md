@@ -16,8 +16,8 @@ gráfico de evolución por año.
 - **Gestión**: muestra/oculta escuelas públicas (●) y privadas (▲) por separado.
 - **Ajuste**:
   - *Tendencias* MCO ponderadas por cantidad de estudiantes: ARG, OCDE, y una de la selección actual (se recalcula con los filtros).
-  - *Dispersión intraescuela (1 DE)*: dibuja detrás de cada escuela un círculo del mismo color (α≈0,25) cuyo diámetro representa 1 desvío estándar de los puntajes de sus estudiantes.
-- El gráfico inferior (3 paneles) muestra la evolución por año con **una línea por región seleccionada y por materia**, usando los mismos colores que el scatter. Las escuelas del estrato «Centro» aportan a las tres líneas (Buenos Aires, Córdoba y Santa Fe). Los tramos que cruzan años sin datos se unen con **línea punteada** (p. ej. Mendoza 2006→2022); los tramos con años consecutivos van con línea sólida. La **línea y banda grises** son el promedio general de Argentina ±1 desvío estándar (nivel estudiante, valores oficiales OCDE).
+  - *Burbujas (Figura 5 OCDE)*: el tamaño de cada punto es proporcional a la población de estudiantes de 15 años que representa cada escuela (suma de `W_FSTUWT`), con una escala fija. Es un atributo absoluto de la escuela, por lo que **no cambia** al activar/desactivar regiones, gestión o año (solo cambiaría si se quisiera representar el % de la población de la selección, criterio distinto).
+- El gráfico inferior (3 paneles) muestra la evolución por año con **una línea por región seleccionada y por materia**, usando los mismos colores que el scatter. Las escuelas del estrato «Centro» aportan a las tres líneas (Buenos Aires, Córdoba y Santa Fe). Los tramos que cruzan años sin datos se unen con **línea punteada** (p. ej. Mendoza 2006→2022); los tramos con años consecutivos van con línea sólida. La **línea y banda grises** son el promedio general de Argentina con su IC 95 % (misma metodología BRR/Fay + Rubin que las regiones).
 - Pasá el cursor sobre un punto para ver el detalle de la escuela.
 
 ## Estructura del repositorio
@@ -30,12 +30,16 @@ scripts/
   region_mapping.json  # mapeo estrato -> región por ciclo (mejor esfuerzo)
   inspect_strata.py    # ayuda a curar los mapeos de estrato
   build_database.py    # raw/ -> data/ (escuelas + tendencias + nacional) y borra raw/
+  build_estimates.py   # errores estandar BRR/Fay + Rubin (por año, region y gestion)
   build_page.py        # data/ -> index.html
   verify_national.py   # verifica los promedios de Argentina contra los oficiales de la OCDE
+  compare_years.py     # diferencias entre años con linking error
 data/
   pisa_arg_schools.csv # 1 fila por escuela-ciclo (base compacta)
   pisa_arg_trends.csv  # parámetros de tendencia (ARG y OCDE) por ciclo/materia
   pisa_arg_national.csv# promedio y DE generales de Argentina (nivel estudiante) por ciclo/materia
+  pisa_arg_estimates.csv# medias + SE (BRR/Fay + Rubin) por año, región y gestión
+  linking_errors.csv   # linking error oficial de PISA por par de ciclos/materia
   pisa_arg_meta.json   # metadatos y notas
 ```
 
@@ -50,11 +54,13 @@ python scripts/build_page.py               # genera index.html
 ## Metodología (breve)
 
 - **Fuente**: microdatos *public use files* de la OCDE (PISA 2000–2025). Argentina participó en 2000, 2006, 2009, 2012, 2015, 2018, 2022 y 2025 (no en 2003).
-- **Cada escuela**: promedio ponderado por estudiante (`W_FSTUWT`); el puntaje promedia los valores plausibles (10 en 2015+, 5 hasta 2012). Tamaño del punto = cantidad de estudiantes evaluados. El círculo de dispersión usa el desvío estándar muestral de los estudiantes de la escuela (no el error estándar del promedio).
+- **Cada escuela**: promedio ponderado por estudiante (`W_FSTUWT`); el puntaje promedia los valores plausibles (10 en 2015+, 5 hasta 2012). El tamaño de la burbuja es proporcional a la población de estudiantes de 15 años que representa la escuela (metodología de la Figura 5 de la OCDE).
 - **Regiones**: se reconstruyen del estrato muestral (mejor esfuerzo; `region_mapping.json`). En 2009, 2012 y 2015 el estrato «Centro» se asigna simultáneamente a Buenos Aires, Córdoba y Santa Fe para permitir la comparación entre ciclos.
 - **Tendencias**: MCO por escuela ponderadas por cantidad de estudiantes evaluados (ODCO: escuelas de países miembros de la OCDE en cada ciclo).
 - **Datos faltantes**: ESCS usa códigos centinela (9999, 997, etc.) según el ciclo; se tratan como faltantes.
 - **Promedios nacionales**: se calculan a nivel estudiante (ponderados por `W_FSTUWT`) y coinciden con los valores oficiales de la OCDE dentro del redondeo (ver `scripts/verify_national.py`).
+- **Pesos de expansión**: las medias escolares, las líneas de evolución y las regresiones usan la suma de pesos estudiantiles de cada escuela (`w_sum`), no el conteo de alumnos.
+- **Inferencia**: se calculan errores estándar con el **diseño muestral complejo** (replicación BRR/Fay: 80 réplicas, factor de Fay 0.5) y se combinan los 10 valores plausibles con las **reglas de Rubin** (`scripts/build_estimates.py`). Las comparaciones entre años suman el ***linking error*** de PISA donde está disponible (`data/linking_errors.csv`, `scripts/compare_years.py`). Aun así, no corresponde ordenar escuelas individualmente.
 
 ### Advertencias
 

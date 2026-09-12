@@ -1,0 +1,496 @@
+year,region,sector,subject,mean,se,n
+2025,Argentina,all,math,366.814,2.662,11092
+2025,Argentina,all,read,388.704,2.689,11092
+2025,Argentina,all,scie,392.934,2.983,11092
+2025,Argentina,Pública,math,349.011,3.327,7076
+2025,Argentina,Pública,read,370.224,3.302,7076
+2025,Argentina,Pública,scie,373.975,3.704,7076
+2025,Argentina,Privada,math,407.449,5.194,3892
+2025,Argentina,Privada,read,431.072,5.249,3892
+2025,Argentina,Privada,scie,435.773,5.597,3892
+2025,CABA,all,math,418.462,4.512,2276
+2025,CABA,all,read,432.351,4.622,2276
+2025,CABA,all,scie,448.983,4.87,2276
+2025,CABA,Pública,math,388.715,7.328,1074
+2025,CABA,Pública,read,407.182,7.528,1074
+2025,CABA,Pública,scie,420.803,7.729,1074
+2025,CABA,Privada,math,446.102,4.89,1202
+2025,CABA,Privada,read,455.739,5.01,1202
+2025,CABA,Privada,scie,475.169,5.78,1202
+2025,Buenos Aires,all,math,364.095,4.203,1966
+2025,Buenos Aires,all,read,388.674,4.649,1966
+2025,Buenos Aires,all,scie,385.548,4.472,1966
+2025,Buenos Aires,Pública,math,344.532,4.348,1292
+2025,Buenos Aires,Pública,read,368.703,4.903,1292
+2025,Buenos Aires,Pública,scie,364.253,4.881,1292
+2025,Buenos Aires,Privada,math,404.637,9.579,674
+2025,Buenos Aires,Privada,read,430.065,10.239,674
+2025,Buenos Aires,Privada,scie,429.681,9.074,674
+2025,Córdoba,all,math,393.119,4.809,2242
+2025,Córdoba,all,read,416.712,4.892,2242
+2025,Córdoba,all,scie,433.884,5.408,2242
+2025,Córdoba,Pública,math,373.34,6.079,1418
+2025,Córdoba,Pública,read,397.017,6.666,1418
+2025,Córdoba,Pública,scie,412.11,7.13,1418
+2025,Córdoba,Privada,math,427.056,7.466,824
+2025,Córdoba,Privada,read,450.505,7.028,824
+2025,Córdoba,Privada,scie,471.245,7.696,824
+2025,Santa Fe,all,math,380.438,14.797,474
+2025,Santa Fe,all,read,384.001,14.298,474
+2025,Santa Fe,all,scie,407.175,15.787,474
+2025,Santa Fe,Pública,math,377.509,20.658,317
+2025,Santa Fe,Pública,read,372.419,19.288,317
+2025,Santa Fe,Pública,scie,399.806,20.949,317
+2025,Santa Fe,Privada,math,386.28,16.266,157
+2025,Santa Fe,Privada,read,407.099,17.383,157
+2025,Santa Fe,Privada,scie,421.871,22.103,157
+2025,Mendoza,all,math,373.929,4.31,2078
+2025,Mendoza,all,read,387.015,4.508,2078
+2025,Mendoza,all,scie,404.753,4.937,2078
+2025,Mendoza,Pública,math,362.096,4.698,1612
+2025,Mendoza,Pública,read,375.687,5.234,1612
+2025,Mendoza,Pública,scie,393.14,5.485,1612
+2025,Mendoza,Privada,math,415.301,8.639,466
+2025,Mendoza,Privada,read,426.619,6.694,466
+2025,Mendoza,Privada,scie,445.355,9.235,466
+2025,NOA,all,math,349.774,8.874,648
+2025,NOA,all,read,374.037,7.407,648
+2025,NOA,all,scie,386.21,10.177,648
+2025,NOA,Pública,math,343.763,8.821,469
+2025,NOA,Pública,read,363.154,8.139,469
+2025,NOA,Pública,scie,376.881,9.478,469
+2025,NOA,Privada,math,367.605,22.611,179
+2025,NOA,Privada,read,406.322,16.138,179
+2025,NOA,Privada,scie,413.882,27.464,179
+2025,NEA,all,math,328.032,8.261,630
+2025,NEA,all,read,357.146,7.996,630
+2025,NEA,all,scie,345.851,10.443,630
+2025,NEA,Pública,math,309.057,6.833,439
+2025,NEA,Pública,read,336.438,7.05,439
+2025,NEA,Pública,scie,329.89,9.712,439
+2025,NEA,Privada,math,391.437,24.52,191
+2025,NEA,Privada,read,426.339,22.464,191
+2025,NEA,Privada,scie,399.184,29.263,191
+2025,Cuyo,all,math,352.068,12.95,241
+2025,Cuyo,all,read,370.932,12.953,241
+2025,Cuyo,all,scie,398.685,12.649,241
+2025,Cuyo,Pública,math,335.281,6.794,178
+2025,Cuyo,Pública,read,353.527,7.546,178
+2025,Cuyo,Pública,scie,384.315,8.627,178
+2025,Cuyo,Privada,math,411.847,15.409,63
+2025,Cuyo,Privada,read,432.908,25.214,63
+2025,Cuyo,Privada,scie,449.858,16.679,63
+2025,Patagonia,all,math,391.285,9.774,413
+2025,Patagonia,all,read,412.762,9.235,413
+2025,Patagonia,all,scie,407.054,11.013,413
+2025,Patagonia,Pública,math,375.633,14.14,277
+2025,Patagonia,Pública,read,402.262,13.529,277
+2025,Patagonia,Pública,scie,391.425,15.535,277
+2025,Patagonia,Privada,math,429.053,19.035,136
+2025,Patagonia,Privada,read,438.1,17.113,136
+2025,Patagonia,Privada,scie,444.768,17.37,136
+2022,Argentina,all,math,377.529,2.249,12111
+2022,Argentina,all,read,400.744,2.569,12111
+2022,Argentina,all,scie,406.191,2.491,12111
+2022,Argentina,Pública,math,361.153,2.661,7850
+2022,Argentina,Pública,read,381.605,2.901,7850
+2022,Argentina,Pública,scie,388.734,3.051,7850
+2022,Argentina,Privada,math,413.959,3.817,4227
+2022,Argentina,Privada,read,443.809,4.834,4227
+2022,Argentina,Privada,scie,445.039,4.126,4227
+2022,CABA,all,math,423.497,4.239,2251
+2022,CABA,all,read,449.075,4.388,2251
+2022,CABA,all,scie,450.857,4.499,2251
+2022,CABA,Pública,math,406.436,6.681,1056
+2022,CABA,Pública,read,432.626,6.868,1056
+2022,CABA,Pública,scie,434.406,7.182,1056
+2022,CABA,Privada,math,439.273,6.06,1195
+2022,CABA,Privada,read,464.285,6.056,1195
+2022,CABA,Privada,scie,466.069,6.279,1195
+2022,Buenos Aires,all,math,378.443,3.519,2333
+2022,Buenos Aires,all,read,403.981,3.997,2333
+2022,Buenos Aires,all,scie,407.129,3.924,2333
+2022,Buenos Aires,Pública,math,358.618,3.96,1453
+2022,Buenos Aires,Pública,read,380.448,4.456,1453
+2022,Buenos Aires,Pública,scie,385.715,4.878,1453
+2022,Buenos Aires,Privada,math,413.222,6.618,880
+2022,Buenos Aires,Privada,read,445.266,7.902,880
+2022,Buenos Aires,Privada,scie,444.698,6.953,880
+2022,Córdoba,all,math,393.899,4.4,2214
+2022,Córdoba,all,read,418.774,5.57,2214
+2022,Córdoba,all,scie,421.677,5.011,2214
+2022,Córdoba,Pública,math,367.146,6.176,1283
+2022,Córdoba,Pública,read,385.524,8.198,1283
+2022,Córdoba,Pública,scie,392.49,7.175,1283
+2022,Córdoba,Privada,math,426.857,6.671,931
+2022,Córdoba,Privada,read,459.737,7.427,931
+2022,Córdoba,Privada,scie,457.634,7.311,931
+2022,Santa Fe,all,math,400.912,11.659,455
+2022,Santa Fe,all,read,419.815,11.979,455
+2022,Santa Fe,all,scie,426.141,11.007,455
+2022,Santa Fe,Pública,math,381.296,15.86,326
+2022,Santa Fe,Pública,read,400.739,16.013,326
+2022,Santa Fe,Pública,scie,405.318,15.379,326
+2022,Santa Fe,Privada,math,436.096,18.792,129
+2022,Santa Fe,Privada,read,454.032,20.183,129
+2022,Santa Fe,Privada,scie,463.492,16.761,129
+2022,Mendoza,all,math,379.401,4.532,2489
+2022,Mendoza,all,read,403.556,5.494,2489
+2022,Mendoza,all,scie,406.543,5.122,2489
+2022,Mendoza,Pública,math,368.24,4.828,1896
+2022,Mendoza,Pública,read,389.655,5.778,1896
+2022,Mendoza,Pública,scie,394.517,5.515,1896
+2022,Mendoza,Privada,math,420.341,9.044,593
+2022,Mendoza,Privada,read,454.545,11.151,593
+2022,Mendoza,Privada,scie,450.655,9.795,593
+2022,NOA,all,math,352.042,7.331,800
+2022,NOA,all,read,373.974,9.219,800
+2022,NOA,all,scie,381.094,8.324,800
+2022,NOA,Pública,math,340.605,8.525,616
+2022,NOA,Pública,read,358.275,9.719,616
+2022,NOA,Pública,scie,368.813,9.195,616
+2022,NOA,Privada,math,398.672,3.119,184
+2022,NOA,Privada,read,437.975,8.169,184
+2022,NOA,Privada,scie,431.161,6.764,184
+2022,NEA,all,math,350.957,6.691,820
+2022,NEA,all,read,369.919,8.741,820
+2022,NEA,all,scie,381.528,7.476,820
+2022,NEA,Pública,math,345.949,6.502,643
+2022,NEA,Pública,read,364.262,7.585,643
+2022,NEA,Pública,scie,375.061,6.566,643
+2022,NEA,Privada,math,368.004,18.461,177
+2022,NEA,Privada,read,389.179,27.237,177
+2022,NEA,Privada,scie,403.542,23.812,177
+2022,Cuyo,all,math,380.481,6.819,281
+2022,Cuyo,all,read,391.611,8.75,281
+2022,Cuyo,all,scie,409.028,6.245,281
+2022,Cuyo,Pública,math,377.547,7.9,219
+2022,Cuyo,Pública,read,387.122,10.4,219
+2022,Cuyo,Pública,scie,404.603,6.651,219
+2022,Cuyo,Privada,math,393.456,3.067,62
+2022,Cuyo,Privada,read,411.461,4.428,62
+2022,Cuyo,Privada,scie,428.594,6.137,62
+2022,Patagonia,all,math,384.064,5.467,434
+2022,Patagonia,all,read,413.313,3.652,434
+2022,Patagonia,all,scie,415.779,5.005,434
+2022,Patagonia,Pública,math,377.558,6.433,358
+2022,Patagonia,Pública,read,405.226,4.08,358
+2022,Patagonia,Pública,scie,409.405,6.028,358
+2022,Patagonia,Privada,math,418.5,26.747,76
+2022,Patagonia,Privada,read,456.12,28.2,76
+2022,Patagonia,Privada,scie,449.513,24.005,76
+2018,Argentina,all,math,379.454,2.658,11975
+2018,Argentina,all,read,401.503,2.841,11975
+2018,Argentina,all,scie,404.071,2.781,11975
+2018,Argentina,Pública,math,359.481,2.957,7439
+2018,Argentina,Pública,read,377.871,2.998,7439
+2018,Argentina,Pública,scie,383.589,2.98,7439
+2018,Argentina,Privada,math,426.153,4.515,4338
+2018,Argentina,Privada,read,456.039,5.335,4338
+2018,Argentina,Privada,scie,451.973,5.118,4338
+2018,CABA,all,math,433.45,4.785,2300
+2018,CABA,all,read,452.612,5.471,2300
+2018,CABA,all,scie,453.515,5.479,2300
+2018,CABA,Pública,math,419.865,6.753,1153
+2018,CABA,Pública,read,439.306,7.669,1153
+2018,CABA,Pública,scie,442.092,7.538,1153
+2018,CABA,Privada,math,448.078,6.574,1147
+2018,CABA,Privada,read,466.94,7.519,1147
+2018,CABA,Privada,scie,465.815,7.251,1147
+2018,Buenos Aires,all,math,388.132,4.992,2052
+2018,Buenos Aires,all,read,413.907,5.705,2052
+2018,Buenos Aires,all,scie,414.262,5.375,2052
+2018,Buenos Aires,Pública,math,363.854,5.597,1285
+2018,Buenos Aires,Pública,read,385.005,6.058,1285
+2018,Buenos Aires,Pública,scie,388.917,5.864,1285
+2018,Buenos Aires,Privada,math,433.813,7.715,767
+2018,Buenos Aires,Privada,read,468.288,9.926,767
+2018,Buenos Aires,Privada,scie,461.952,8.794,767
+2018,Córdoba,all,math,400.403,4.353,2391
+2018,Córdoba,all,read,427.138,4.367,2391
+2018,Córdoba,all,scie,427.423,4.516,2391
+2018,Córdoba,Pública,math,372.082,5.649,1317
+2018,Córdoba,Pública,read,392.272,6.228,1317
+2018,Córdoba,Pública,scie,397.032,6.045,1317
+2018,Córdoba,Privada,math,435.823,6.28,1074
+2018,Córdoba,Privada,read,470.744,5.471,1074
+2018,Córdoba,Privada,scie,465.43,6.418,1074
+2018,Santa Fe,all,math,369.953,11.35,506
+2018,Santa Fe,all,read,383.634,12.513,506
+2018,Santa Fe,all,scie,387.363,10.39,506
+2018,Santa Fe,Pública,math,358.833,13.048,330
+2018,Santa Fe,Pública,read,369.972,13.246,330
+2018,Santa Fe,Pública,scie,375.498,11.389,330
+2018,Santa Fe,Privada,math,393.725,21.431,176
+2018,Santa Fe,Privada,read,412.842,26.385,176
+2018,Santa Fe,Privada,scie,412.727,20.767,176
+2018,NOA,all,math,355.74,5.365,2769
+2018,NOA,all,read,371.663,6.436,2769
+2018,NOA,all,scie,375.301,6.442,2769
+2018,NOA,Pública,math,339.064,5.971,2030
+2018,NOA,Pública,read,350.534,7.284,2030
+2018,NOA,Pública,scie,357.769,6.781,2030
+2018,NOA,Privada,math,418.127,12.219,739
+2018,NOA,Privada,read,450.713,13.555,739
+2018,NOA,Privada,scie,440.896,15.506,739
+2018,NEA,all,math,349.211,9.792,762
+2018,NEA,all,read,369.589,10.659,762
+2018,NEA,all,scie,375.888,10.1,762
+2018,NEA,Pública,math,334.637,10.858,582
+2018,NEA,Pública,read,354.887,12.327,582
+2018,NEA,Pública,scie,362.915,11.503,582
+2018,NEA,Privada,math,396.714,17.021,180
+2018,NEA,Privada,read,417.509,14.673,180
+2018,NEA,Privada,scie,418.169,15.634,180
+2018,Cuyo,all,math,378.343,8.17,564
+2018,Cuyo,all,read,402.23,7.965,564
+2018,Cuyo,all,scie,406.568,7.698,564
+2018,Cuyo,Pública,math,363.654,9.46,457
+2018,Cuyo,Pública,read,384.601,10.525,457
+2018,Cuyo,Pública,scie,391.74,9.659,457
+2018,Cuyo,Privada,math,429.18,8.617,107
+2018,Cuyo,Privada,read,463.245,4.5,107
+2018,Cuyo,Privada,scie,457.89,8.197,107
+2018,Patagonia,all,math,392.511,7.057,433
+2018,Patagonia,all,read,412.678,8.145,433
+2018,Patagonia,all,scie,420.09,7.901,433
+2018,Patagonia,Pública,math,377.868,7.011,285
+2018,Patagonia,Pública,read,394.279,8.935,285
+2018,Patagonia,Pública,scie,403.282,7.865,285
+2018,Patagonia,Privada,math,417.216,14.501,148
+2018,Patagonia,Privada,read,443.718,15.886,148
+2018,Patagonia,Privada,scie,448.446,16.144,148
+2012,Argentina,all,math,388.432,3.493,5908
+2012,Argentina,all,read,395.979,3.693,5908
+2012,Argentina,all,scie,405.632,3.878,5908
+2012,Argentina,Pública,math,373.397,3.972,3382
+2012,Argentina,Pública,read,375.997,4.364,3382
+2012,Argentina,Pública,scie,387.485,4.867,3382
+2012,Argentina,Privada,math,429.86,5.528,2129
+2012,Argentina,Privada,read,448.878,6.279,2129
+2012,Argentina,Privada,scie,453.6,6.333,2129
+2012,CABA,all,math,417.85,7.343,1335
+2012,CABA,all,read,429.275,9.004,1335
+2012,CABA,all,scie,424.474,8.642,1335
+2012,CABA,Pública,math,378.259,14.499,627
+2012,CABA,Pública,read,380.956,20.436,627
+2012,CABA,Pública,scie,379.476,17.831,627
+2012,CABA,Privada,math,459.767,6.605,708
+2012,CABA,Privada,read,480.433,6.682,708
+2012,CABA,Privada,scie,472.115,8.285,708
+2012,Buenos Aires,all,math,400.53,4.583,2543
+2012,Buenos Aires,all,read,413.464,4.813,2543
+2012,Buenos Aires,all,scie,420.166,5.624,2543
+2012,Buenos Aires,Pública,math,377.932,6.066,1482
+2012,Buenos Aires,Pública,read,383.822,5.859,1482
+2012,Buenos Aires,Pública,scie,392.78,6.948,1482
+2012,Buenos Aires,Privada,math,430.986,6.489,1061
+2012,Buenos Aires,Privada,read,453.413,7.833,1061
+2012,Buenos Aires,Privada,scie,457.075,8.131,1061
+2012,Córdoba,all,math,400.53,4.583,2543
+2012,Córdoba,all,read,413.464,4.813,2543
+2012,Córdoba,all,scie,420.166,5.624,2543
+2012,Córdoba,Pública,math,377.932,6.066,1482
+2012,Córdoba,Pública,read,383.822,5.859,1482
+2012,Córdoba,Pública,scie,392.78,6.948,1482
+2012,Córdoba,Privada,math,430.986,6.489,1061
+2012,Córdoba,Privada,read,453.413,7.833,1061
+2012,Córdoba,Privada,scie,457.075,8.131,1061
+2012,Santa Fe,all,math,400.53,4.583,2543
+2012,Santa Fe,all,read,413.464,4.813,2543
+2012,Santa Fe,all,scie,420.166,5.624,2543
+2012,Santa Fe,Pública,math,377.932,6.066,1482
+2012,Santa Fe,Pública,read,383.822,5.859,1482
+2012,Santa Fe,Pública,scie,392.78,6.948,1482
+2012,Santa Fe,Privada,math,430.986,6.489,1061
+2012,Santa Fe,Privada,read,453.413,7.833,1061
+2012,Santa Fe,Privada,scie,457.075,8.131,1061
+2012,NOA,all,math,374.833,8.061,541
+2012,NOA,all,read,379.655,10.117,541
+2012,NOA,all,scie,395.398,8.179,541
+2012,NOA,Pública,math,356.417,6.851,367
+2012,NOA,Pública,read,364.477,11.608,367
+2012,NOA,Pública,scie,377.901,9.062,367
+2012,NOA,Privada,math,409.813,18.505,174
+2012,NOA,Privada,read,408.484,16.653,174
+2012,NOA,Privada,scie,428.632,13.192,174
+2012,NEA,all,math,365.171,14.829,449
+2012,NEA,all,read,369.006,13.22,449
+2012,NEA,all,scie,382.568,13.259,449
+2012,NEA,Pública,math,363.262,12.142,376
+2012,NEA,Pública,read,362.556,10.759,376
+2012,NEA,Pública,scie,377.277,10.834,376
+2012,NEA,Privada,math,373.327,58.121,73
+2012,NEA,Privada,read,396.575,50.154,73
+2012,NEA,Privada,scie,405.182,50.23,73
+2012,Cuyo,all,math,375.713,8.982,377
+2012,Cuyo,all,read,364.472,12.26,377
+2012,Cuyo,all,scie,385.813,15.709,377
+2012,Cuyo,Pública,math,365.945,11.936,318
+2012,Cuyo,Pública,read,351.1,15.471,318
+2012,Cuyo,Pública,scie,374.263,19.692,318
+2012,Cuyo,Privada,math,432.053,11.058,59
+2012,Cuyo,Privada,read,441.605,7.483,59
+2012,Cuyo,Privada,scie,452.436,5.576,59
+2012,Patagonia,all,math,397.293,8.517,266
+2012,Patagonia,all,read,397.129,11.955,266
+2012,Patagonia,all,scie,411.435,9.514,266
+2012,Patagonia,Pública,math,384.15,6.18,212
+2012,Patagonia,Pública,read,383.274,9.0,212
+2012,Patagonia,Pública,scie,399.296,7.286,212
+2012,Patagonia,Privada,math,457.276,9.417,54
+2012,Patagonia,Privada,read,460.36,20.035,54
+2012,Patagonia,Privada,scie,466.833,16.095,54
+2009,Argentina,all,math,388.068,4.09,4774
+2009,Argentina,all,read,398.261,4.632,4774
+2009,Argentina,all,scie,400.839,4.573,4774
+2009,Argentina,Pública,math,372.279,5.483,2288
+2009,Argentina,Pública,read,380.728,6.48,2288
+2009,Argentina,Pública,scie,385.183,6.198,2288
+2009,Argentina,Privada,math,432.788,8.911,1415
+2009,Argentina,Privada,read,452.456,9.234,1415
+2009,Argentina,Privada,scie,450.292,8.591,1415
+2009,Buenos Aires,all,math,414.8,6.191,2474
+2009,Buenos Aires,all,read,428.736,6.541,2474
+2009,Buenos Aires,all,scie,428.851,6.103,2474
+2009,Buenos Aires,Pública,math,386.015,7.64,1364
+2009,Buenos Aires,Pública,read,394.659,8.864,1364
+2009,Buenos Aires,Pública,scie,398.329,8.319,1364
+2009,Buenos Aires,Privada,math,443.585,9.914,1110
+2009,Buenos Aires,Privada,read,462.814,10.358,1110
+2009,Buenos Aires,Privada,scie,459.375,9.561,1110
+2009,Córdoba,all,math,414.8,6.191,2474
+2009,Córdoba,all,read,428.736,6.541,2474
+2009,Córdoba,all,scie,428.851,6.103,2474
+2009,Córdoba,Pública,math,386.015,7.64,1364
+2009,Córdoba,Pública,read,394.659,8.864,1364
+2009,Córdoba,Pública,scie,398.329,8.319,1364
+2009,Córdoba,Privada,math,443.585,9.914,1110
+2009,Córdoba,Privada,read,462.814,10.358,1110
+2009,Córdoba,Privada,scie,459.375,9.561,1110
+2009,Santa Fe,all,math,414.8,6.191,2474
+2009,Santa Fe,all,read,428.736,6.541,2474
+2009,Santa Fe,all,scie,428.851,6.103,2474
+2009,Santa Fe,Pública,math,386.015,7.64,1364
+2009,Santa Fe,Pública,read,394.659,8.864,1364
+2009,Santa Fe,Pública,scie,398.329,8.319,1364
+2009,Santa Fe,Privada,math,443.585,9.914,1110
+2009,Santa Fe,Privada,read,462.814,10.358,1110
+2009,Santa Fe,Privada,scie,459.375,9.561,1110
+2009,NOA,all,math,363.195,7.23,557
+2009,NOA,all,read,380.752,8.07,557
+2009,NOA,all,scie,386.632,8.481,557
+2009,NOA,Pública,math,347.71,8.568,389
+2009,NOA,Pública,read,361.825,8.037,389
+2009,NOA,Pública,scie,369.075,9.113,389
+2009,NOA,Privada,math,407.392,17.133,168
+2009,NOA,Privada,read,434.776,22.284,168
+2009,NOA,Privada,scie,436.747,26.874,168
+2009,NEA,all,math,331.483,12.256,405
+2009,NEA,all,read,333.818,13.599,405
+2009,NEA,all,scie,338.923,12.388,405
+2009,NEA,Pública,math,336.461,13.162,328
+2009,NEA,Pública,read,332.327,14.877,328
+2009,NEA,Pública,scie,338.111,13.989,328
+2009,NEA,Privada,math,316.724,26.883,77
+2009,NEA,Privada,read,338.237,31.413,77
+2009,NEA,Privada,scie,341.33,27.864,77
+2009,Patagonia,all,math,377.758,10.006,267
+2009,Patagonia,all,read,394.288,9.376,267
+2009,Patagonia,all,scie,400.007,11.001,267
+2009,Patagonia,Pública,math,365.12,7.991,207
+2009,Patagonia,Pública,read,383.053,10.763,207
+2009,Patagonia,Pública,scie,386.544,13.521,207
+2009,Patagonia,Privada,math,414.653,8.748,60
+2009,Patagonia,Privada,read,427.089,11.466,60
+2009,Patagonia,Privada,scie,439.311,9.368,60
+2006,Argentina,all,math,381.254,6.243,4339
+2006,Argentina,all,read,373.724,7.17,4339
+2006,Argentina,all,scie,391.244,6.077,4339
+2006,Argentina,Pública,math,372.505,6.724,2457
+2006,Argentina,Pública,read,364.131,7.521,2457
+2006,Argentina,Pública,scie,381.662,6.37,2457
+2006,Argentina,Privada,math,437.117,8.315,1340
+2006,Argentina,Privada,read,441.795,8.202,1340
+2006,Argentina,Privada,scie,449.256,7.701,1340
+2006,CABA,all,math,450.763,16.328,283
+2006,CABA,all,read,451.806,25.007,283
+2006,CABA,all,scie,457.911,18.714,283
+2006,CABA,Pública,math,423.98,26.377,151
+2006,CABA,Pública,read,411.887,44.225,151
+2006,CABA,Pública,scie,427.774,26.565,151
+2006,CABA,Privada,math,475.032,14.391,132
+2006,CABA,Privada,read,487.978,20.481,132
+2006,CABA,Privada,scie,485.219,21.143,132
+2006,Buenos Aires,all,math,407.04,7.495,1062
+2006,Buenos Aires,all,read,401.499,8.528,1062
+2006,Buenos Aires,all,scie,413.7,7.831,1062
+2006,Buenos Aires,Pública,math,392.466,8.129,599
+2006,Buenos Aires,Pública,read,379.826,9.665,599
+2006,Buenos Aires,Pública,scie,396.604,8.137,599
+2006,Buenos Aires,Privada,math,426.53,14.324,463
+2006,Buenos Aires,Privada,read,430.485,15.091,463
+2006,Buenos Aires,Privada,scie,436.564,14.863,463
+2006,Córdoba,all,math,420.093,18.833,305
+2006,Córdoba,all,read,421.912,14.115,305
+2006,Córdoba,all,scie,435.778,18.837,305
+2006,Córdoba,Pública,math,392.755,21.015,182
+2006,Córdoba,Pública,read,386.869,6.349,182
+2006,Córdoba,Pública,scie,402.535,23.859,182
+2006,Córdoba,Privada,math,458.022,29.433,123
+2006,Córdoba,Privada,read,470.531,29.281,123
+2006,Córdoba,Privada,scie,481.9,27.435,123
+2006,Santa Fe,all,math,399.986,14.804,281
+2006,Santa Fe,all,read,409.969,11.247,281
+2006,Santa Fe,all,scie,407.982,15.246,281
+2006,Santa Fe,Pública,math,411.129,17.697,187
+2006,Santa Fe,Pública,read,418.033,14.977,187
+2006,Santa Fe,Pública,scie,412.871,17.515,187
+2006,Santa Fe,Privada,math,374.631,20.329,94
+2006,Santa Fe,Privada,read,391.618,16.419,94
+2006,Santa Fe,Privada,scie,396.856,23.128,94
+2006,Mendoza,all,math,378.508,29.177,179
+2006,Mendoza,all,read,380.985,20.822,179
+2006,Mendoza,all,scie,385.631,18.878,179
+2006,Mendoza,Pública,math,358.578,15.537,145
+2006,Mendoza,Pública,read,371.204,14.856,145
+2006,Mendoza,Pública,scie,374.93,11.978,145
+2006,Mendoza,Privada,math,459.316,5.382,34
+2006,Mendoza,Privada,read,420.641,8.047,34
+2006,Mendoza,Privada,scie,429.019,5.712,34
+2006,NOA,all,math,367.15,15.022,441
+2006,NOA,all,read,362.796,9.266,441
+2006,NOA,all,scie,386.37,10.122,441
+2006,NOA,Pública,math,362.705,18.477,374
+2006,NOA,Pública,read,351.113,9.491,374
+2006,NOA,Pública,scie,381.967,12.299,374
+2006,NOA,Privada,math,393.095,20.945,67
+2006,NOA,Privada,read,430.993,20.083,67
+2006,NOA,Privada,scie,412.072,20.886,67
+2006,NEA,all,math,353.457,17.467,361
+2006,NEA,all,read,350.861,24.799,361
+2006,NEA,all,scie,372.845,21.017,361
+2006,NEA,Pública,math,328.718,18.623,271
+2006,NEA,Pública,read,314.637,24.381,271
+2006,NEA,Pública,scie,343.776,20.172,271
+2006,NEA,Privada,math,417.363,20.641,90
+2006,NEA,Privada,read,444.438,12.942,90
+2006,NEA,Privada,scie,447.934,17.467,90
+2006,Cuyo,all,math,359.181,14.676,118
+2006,Cuyo,all,read,364.958,19.869,118
+2006,Cuyo,all,scie,377.353,20.873,118
+2006,Cuyo,Pública,math,371.191,19.676,89
+2006,Cuyo,Pública,read,378.256,28.938,89
+2006,Cuyo,Pública,scie,387.588,25.886,89
+2006,Cuyo,Privada,math,336.882,6.384,29
+2006,Cuyo,Privada,read,340.267,11.084,29
+2006,Cuyo,Privada,scie,358.35,7.427,29
+2006,Patagonia,all,math,399.197,20.821,262
+2006,Patagonia,all,read,407.155,15.725,262
+2006,Patagonia,all,scie,409.451,17.077,262
+2006,Patagonia,Pública,math,389.088,20.709,228
+2006,Patagonia,Pública,read,395.022,9.768,228
+2006,Patagonia,Pública,scie,398.593,13.673,228
+2006,Patagonia,Privada,math,465.48,7.345,34
+2006,Patagonia,Privada,read,486.714,10.752,34
+2006,Patagonia,Privada,scie,480.648,5.754,34

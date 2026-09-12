@@ -1,5 +1,5 @@
 {
-  "built": "2026-09-11 23:31:42",
+  "built": "2026-09-12 13:12:18",
   "years": [
     2006,
     2009,
@@ -9,12 +9,12 @@
     2025
   ],
   "n_schools": {
-    "2006": 176,
-    "2009": 183,
-    "2012": 226,
-    "2018": 455,
-    "2022": 457,
-    "2025": 412
+    "2006": 133,
+    "2009": 136,
+    "2012": 204,
+    "2018": 434,
+    "2022": 448,
+    "2025": 400
   },
   "flags": {
     "2022": [
@@ -24,12 +24,9 @@
       "Prueba en computadora."
     ]
   },
-  "source": "Microdatos PISA OCDE (public use files)",
-  "note": "Regiones mapeadas a partir de STRATUM (mejor esfuerzo); pueden faltar en ciclos antiguos.",
-  "excluded": [
-    "2015: muestra argentina con problemas tecnicos; resultados no comparables con el resto de los ciclos."
-  ],
   "excluded_region_years": [
     "2009 Cuyo"
-  ]
+  ],
+  "source": "Microdatos PISA OCDE (public use files)",
+  "note": "Regiones mapeadas a partir de STRATUM (mejor esfuerzo); pueden faltar en ciclos antiguos."
 }
