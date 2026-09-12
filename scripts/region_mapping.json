@@ -1,0 +1,146 @@
+{
+  "_comment": "Mapeo estricto (mejor esfuerzo) de codigos de estrato muestral (STRATUM) a regiones. Curado a partir de inspect_strata.py. 'sector_rule' indica como inferir gestion cuando falta SC013Q01TA.",
+  "2025": {
+    "sector_rule": "odd_public",
+    "strata": {
+      "ARG01": "CABA",
+      "ARG02": "CABA",
+      "ARG03": "Buenos Aires",
+      "ARG04": "Buenos Aires",
+      "ARG05": "Buenos Aires",
+      "ARG06": "Buenos Aires",
+      "ARG07": "Córdoba",
+      "ARG08": "Córdoba",
+      "ARG09": "Santa Fe",
+      "ARG10": "Santa Fe",
+      "ARG11": "NEA",
+      "ARG12": "NEA",
+      "ARG13": "NOA",
+      "ARG14": "NOA",
+      "ARG15": "Cuyo",
+      "ARG16": "Cuyo",
+      "ARG17": "Patagonia",
+      "ARG18": "Patagonia",
+      "ARG19": "Mendoza",
+      "ARG20": "Mendoza"
+    }
+  },
+  "2022": {
+    "sector_rule": "odd_public",
+    "_note": "ARG05/06 corresponden a Tucuman (agrupado en NOA).",
+    "strata": {
+      "ARG01": "CABA",
+      "ARG02": "CABA",
+      "ARG03": "Buenos Aires",
+      "ARG04": "Buenos Aires",
+      "ARG05": "NOA",
+      "ARG06": "NOA",
+      "ARG07": "Córdoba",
+      "ARG08": "Córdoba",
+      "ARG09": "Santa Fe",
+      "ARG10": "Santa Fe",
+      "ARG11": "NEA",
+      "ARG12": "NEA",
+      "ARG13": "NOA",
+      "ARG14": "NOA",
+      "ARG15": "Cuyo",
+      "ARG16": "Cuyo",
+      "ARG17": "Patagonia",
+      "ARG18": "Patagonia",
+      "ARG19": "Mendoza",
+      "ARG20": "Mendoza"
+    }
+  },
+  "2018": {
+    "sector_rule": "odd_public",
+    "_note": "ARG0307/08 = Tucuman (agrupado en NOA). Las dos ultimas cifras pares=privada, impares=publica.",
+    "strata": {
+      "ARG0101": "CABA",
+      "ARG0102": "CABA",
+      "ARG0203": "Buenos Aires",
+      "ARG0204": "Buenos Aires",
+      "ARG0205": "Buenos Aires",
+      "ARG0206": "Buenos Aires",
+      "ARG0307": "NOA",
+      "ARG0308": "NOA",
+      "ARG0409": "Córdoba",
+      "ARG0410": "Córdoba",
+      "ARG0511": "Santa Fe",
+      "ARG0512": "Santa Fe",
+      "ARG0513": "NEA",
+      "ARG0514": "NEA",
+      "ARG0515": "NOA",
+      "ARG0516": "NOA",
+      "ARG0517": "Cuyo",
+      "ARG0518": "Cuyo",
+      "ARG0519": "Patagonia",
+      "ARG0520": "Patagonia"
+    }
+  },
+  "2015": {
+    "sector_rule": null,
+    "_note": "Estrato 'Centro' se asigna simultaneamente a Buenos Aires, Cordoba y Santa Fe para permitir la comparacion con otros ciclos (ver pie de pagina).",
+    "strata": {
+      "ARG0101": "CABA",
+      "ARG0002": ["Buenos Aires", "Córdoba", "Santa Fe"],
+      "ARG0003": "NEA",
+      "ARG0004": "NOA",
+      "ARG0005": "Cuyo",
+      "ARG0006": "Patagonia"
+    }
+  },
+  "2006": {
+    "sector_rule": null,
+    "_note": "Estratos por provincia (COD_PROV). Se agrupan segun la regionalizacion habitual. Entre Rios (COD_PROV30) queda sin mapear.",
+    "strata": {
+      "03201": "CABA",
+      "03202": "Buenos Aires",
+      "03203": "Buenos Aires",
+      "03204": "NOA",
+      "03205": "Córdoba",
+      "03206": "NEA",
+      "03207": "NEA",
+      "03208": "Patagonia",
+      "03210": "NEA",
+      "03211": "NOA",
+      "03212": "Patagonia",
+      "03213": "NOA",
+      "03214": "Mendoza",
+      "03215": "NEA",
+      "03216": "Patagonia",
+      "03217": "Patagonia",
+      "03218": "NOA",
+      "03219": "Cuyo",
+      "03220": "Cuyo",
+      "03221": "Patagonia",
+      "03222": "Santa Fe",
+      "03223": "NOA",
+      "03224": "NOA",
+      "03225": "Patagonia"
+    }
+  },
+  "2009": {
+    "sector_rule": null,
+    "_note": "Estrato 'Centro' asignado a Buenos Aires, Cordoba y Santa Fe a la vez.",
+    "strata": {
+      "03201": ["Buenos Aires", "Córdoba", "Santa Fe"],
+      "03202": "NEA",
+      "03203": "NOA",
+      "03204": "Cuyo",
+      "03205": "Patagonia"
+    }
+  },
+  "2012": {
+    "sector_rule": null,
+    "_note": "Estrato 'Centro' (ARG0001) asignado a Buenos Aires, Cordoba y Santa Fe a la vez.",
+    "strata": {
+      "ARG0001": ["Buenos Aires", "Córdoba", "Santa Fe"],
+      "ARG0102": "CABA",
+      "ARG0003": "NEA",
+      "ARG0004": "NOA",
+      "ARG0005": "Cuyo",
+      "ARG0006": "Patagonia"
+    }
+  },
+  "2000": { "sector_rule": null, "strata": {} }
+}

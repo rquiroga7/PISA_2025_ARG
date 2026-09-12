@@ -1,0 +1,35 @@
+{
+  "built": "2026-09-11 23:31:42",
+  "years": [
+    2006,
+    2009,
+    2012,
+    2018,
+    2022,
+    2025
+  ],
+  "n_schools": {
+    "2006": 176,
+    "2009": 183,
+    "2012": 226,
+    "2018": 455,
+    "2022": 457,
+    "2025": 412
+  },
+  "flags": {
+    "2022": [
+      "Prueba en computadora (los ciclos previos fueron en papel)."
+    ],
+    "2025": [
+      "Prueba en computadora."
+    ]
+  },
+  "source": "Microdatos PISA OCDE (public use files)",
+  "note": "Regiones mapeadas a partir de STRATUM (mejor esfuerzo); pueden faltar en ciclos antiguos.",
+  "excluded": [
+    "2015: muestra argentina con problemas tecnicos; resultados no comparables con el resto de los ciclos."
+  ],
+  "excluded_region_years": [
+    "2009 Cuyo"
+  ]
+}

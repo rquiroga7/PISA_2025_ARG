@@ -1,5 +1,9 @@
 # Archivos PISA bulk: muy grandes para GitHub (>100 MB por archivo).
-# Se regeneran con los links del OECD webfs (ver PISA2025_Codebook.xlsx).
+# Se bajan con scripts/download_pisa.py (ver README). No se versionan.
+raw/
+*.part
+__pycache__/
+*.pyc
 CY09_MS_STU_PUF.sav
 CY09_MS_STU_PUF.zip
 CY09_MS_SCH_PUF.zip
